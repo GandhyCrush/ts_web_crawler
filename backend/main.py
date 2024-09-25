@@ -10,9 +10,9 @@ origins = [
 ]
 
 app = FastAPI(
-    title="Hacker News Scrapper",
+    title="Web Crawler API",
     description="This is a simple scrapper for Hacker News",
-    docs_url="/",
+    docs_url="/docs",
 )
 
 app.add_middleware(
