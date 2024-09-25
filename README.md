@@ -46,11 +46,13 @@ This app crawls the "https://news.ycombinator.com/" website and shows the releva
    pip install -r requirements.txt
    ```
 
-3. **Run the server (with fastapi)**
+3. **Run the backend server (with fastapi)**
 
    ```
    fastapi dev main.py
    ```
+
+   This will run the backend server at http://localhost:8000. You can view the API docs at http://localhost:8000/docs
 
 ### Frontend
 
@@ -61,11 +63,13 @@ This app crawls the "https://news.ycombinator.com/" website and shows the releva
    npm install
    ```
 
-2. **Run the server (with vite)**
+2. **Run the frontend server (with vite)**
 
    ```
    npm run dev
    ```
+
+   This will run the frontend server at http://localhost:5173 where you can view the website and interact with it.
 
 ## Author
 - Gandhy García
