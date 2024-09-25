@@ -1,24 +1,22 @@
 import { useEffect, useState } from 'react'
-import reactLogo from '../assets/react.svg'
 import { useQuery } from '@tanstack/react-query'
 import { get } from '../services/api'
 import { Entry, EntryResponse } from '../models/InterfaceModels'
 
 const Entries = () => {
-    const [count, setCount] = useState(0)
-    const [queryActive, setQueryActive] = useState(false)
     const [fetchedEntries, setFetchedEntries] = useState<Entry[]>([] as Entry[])
 
-    const { isFetching, data, isSuccess, isFetched } = useQuery({
-        queryKey: ['todos'],
+    const { isFetching, data, isFetched, refetch } = useQuery({
+        queryKey: ['get_entries'],
         queryFn: async () => {
             const response = await get<EntryResponse>('/get_entries')
 
             console.log(response.data)
-            setQueryActive(false)
             return response.data.result
         },
-        enabled: queryActive,
+
+        enabled: false,
+
     })
 
     const handleFilterMoreThanFive = () => {
@@ -46,46 +44,90 @@ const Entries = () => {
         setFetchedEntries(orderedEntries as Entry[])
     }
 
-    const handleGetEntries = () => {
-        setQueryActive(true)
+    const handleGetEntries = async () => {
+        refetch()
     }
 
     useEffect(() => {
-        console.log(data)
+        console.log('useEffect', data)
         setFetchedEntries(data as Entry[])
-    }, [isSuccess, isFetched])
+    }, [data])
 
     return (
-        <>
-            <div>
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
+        <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '1rem',
+            padding: 0,
+            width: '100%'
+        }}>
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '50%'
+                }}
+            >
+
+                <a href="#" target="_blank">
+                    <img
+                        src="https://images.vexels.com/media/users/3/304394/isolated/preview/35c0a097105dd6a498c90c597c3b01a5-araa-a-rosa-y-morada.png"
+                        className="spider logo" alt="Spider logo"
+                        height={500}
+                    />
                 </a>
-            </div>
-            <h1>Web Crawler</h1>
-            <div className='card' style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyItems: 'center',
-                gap: '1rem',
-                padding: '1rem',
-                marginBottom: '1rem',
-                width: '100%',
-            }}>
-                <button onClick={handleGetEntries} style={{
-                    backgroundColor: 'darkblue',
+
+                <h1>Web Crawler</h1>
+                <div className='card' style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyItems: 'center',
+                    gap: '1rem',
+
                 }}>
-                    See results / Update Results
-                </button>
-                <button onClick={handleFilterMoreThanFive}>
-                    Get titles with more than 5 words
-                </button>
-                <button onClick={handleFilterLessThanFive}>
-                    Get titles with less than or equal to 5 words
-                </button>
+                    <button
+                        onClick={handleGetEntries}
+                        style={{
+                            backgroundColor: 'darkblue',
+                            width: 300
+                        }}
+                        disabled={isFetching}
+                    >
+                        See results / Update Results
+                    </button>
+                    <button
+                        onClick={handleFilterMoreThanFive}
+                        style={{
+                            width: 300
+                        }}
+                        disabled={isFetching}>
+                        Get titles with more than 5 words
+                    </button>
+                    <button
+                        onClick={handleFilterLessThanFive}
+                        style={{
+                            width: 300
+                        }}
+                        disabled={isFetching}
+                    >
+                        Get titles with less than or equal to 5 words
+                    </button>
+                </div>
             </div>
-            <div>
+
+            <div style={{
+                width: '100%',
+                height: '500px',
+                whiteSpace: 'nowrap',
+                overflowY: 'scroll',
+                overflowX: 'visible',
+                alignItems: 'center'
+            }}>
+                <h2>
+                    RESULTS
+                </h2>
                 {
                     isFetching ? (
                         <div className='card'>
@@ -101,15 +143,16 @@ const Entries = () => {
                     ) : (
                         fetchedEntries?.map((entry, index) => (
                             <div key={index} className='card'>
-                                <h2>{entry.title}</h2>
+                                <h3>{entry.title}</h3>
                                 <p>Number: {entry.number}</p>
                                 <p>Points: {entry.points}</p>
                                 <p>Number of comments: {entry.number_of_comments}</p>
                             </div>
                         )))
                 }
+
             </div>
-        </>
+        </div>
     )
 }
 
