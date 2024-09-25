@@ -1,50 +1,71 @@
-# React + TypeScript + Vite
+# Web Crawler Exercise
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a code exercise made by Gandhy García for Stack Builders.
 
-Currently, two official plugins are available:
+This code is structured as a mini app with a frontend and backend components.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This app crawls the "https://news.ycombinator.com/" website and shows the relevant information of a certain number of entries. It also allows the user to filter the results.
 
-## Expanding the ESLint configuration
+## Built With
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Frontend
+- React
+- Typescript
+- Vite
 
-- Configure the top-level `parserOptions` property like this:
+### Backend
+- FastAPI
+- Python
+- Selenium
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 📋 Requirements
+-   Node.js
+-   Python 3.11
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🔧 Prepare and launch the environment
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- **Clone the repo**
+    ```
+      git clone https://github.com/GandhyCrush/ts_web_crawler.git
+    ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Backend
+1. **Create and activate virtual environment**
+
+   ```
+   cd backend
+
+   python -m venv .venv
+
+   source .venv/Scripts/activate
+   ```
+
+2. **Install the dependencies**
+
+   ```
+   pip install -r requirements.txt
+   ```
+
+3. **Run the server (with fastapi)**
+
+   ```
+   fastapi dev main.py
+   ```
+
+### Frontend
+
+1. **Install the dependencies**
+
+   ```
+   cd frontend
+   npm install
+   ```
+
+2. **Run the server (with vite)**
+
+   ```
+   npm run dev
+   ```
+
+## Author
+- Gandhy García
